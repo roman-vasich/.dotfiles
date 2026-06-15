@@ -38,8 +38,7 @@ vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" }) vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -58,15 +57,12 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {
+desc = "Highlight when yanking (copying) text",
 	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
 	end,
 })
-
-vim.lsp.enable("lua-ls")
-vim.lsp.enable("gopls")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -75,31 +71,8 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-	{
-		"numToStr/Comment.nvim",
-		config = function()
-			local config = {
-				toggler = {
-					line = "<C-_>",
-				},
-				opleader = {
-					line = "<C-_>",
-				},
-			}
-
-			require("Comment").setup(config)
-		end,
-	},
-	{
-		import = "plugins",
-	},
-}, {
-	change_detection = {
-		notify = false,
-	},
-	-- as defined per Nerd Font
-	ui = {},
+require("lazy").setup("plugins", {
+	change_detection = { enabled = true, notify = false },
 })
 
 local function set_filetype(pattern, filetype)
@@ -110,6 +83,3 @@ local function set_filetype(pattern, filetype)
 end
 
 set_filetype({ "docker-compose.yml" }, "yaml.docker-compose")
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et

@@ -1,4 +1,4 @@
-local config = function()
+local config = function(_, _)
 	local augroup = vim.api.nvim_create_augroup("lsp.attach", { clear = true })
 	vim.api.nvim_create_autocmd({ "LspAttach" }, {
 		group = augroup,
@@ -77,27 +77,34 @@ local config = function()
 						set termguicolors
 					]])
 
+				---@type vim.diagnostic.Opts.Float
+				float_ops = {
+					focusable = false,
+					style = "minimal",
+					border = "rounded",
+					source = true,
+					header = "",
+					prefix = "",
+				}
 				vim.diagnostic.config({
-					float = {
-						focusable = false,
-						style = "minimal",
-						border = "rounded",
-						source = "if_many",
-						header = "",
-						prefix = "",
-					},
+					float = float_ops,
 					underline = true,
-					virtual_text = { prefix = "", spacing = 1, severity = vim.diagnostic.severity.ERROR },
+					virtual_text = {
+						prefix = "",
+						spacing = 1,
+						severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN },
+						source = true,
+					},
 					signs,
 					update_in_insert = true,
 				}, vim.lsp.diagnostic.get_namespace(client.id))
 
-				-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-				-- 	group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-				-- 	callback = function()
-				-- 		vim.diagnostic.open_float(nil, { focus = false })
-				-- 	end,
-				-- })
+				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+					group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+					callback = function()
+						vim.diagnostic.open_float(float_ops)
+					end,
+				})
 			end
 
 			if client and client.server_capabilities.documentHighlightProvider then
@@ -112,43 +119,6 @@ local config = function()
 				})
 			end
 		end,
-	})
-
-	-- LSP servers and clients are able to communicate to each other what features they support.
-	--  By default, Neovim doesn't support everything that is in the LSP specification.
-	--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-	--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-	--  Add any additional override configuration in the following tables. Available keys are:
-	--  - cmd (table): Override the default command used to start the server
-	--  - filetypes (table): Override the default list of associated filetypes for the server
-	--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-	--  - settings (table): Override the default settings passed when initializing the server.
-	--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-	local util = require("lspconfig/util")
-	local servers = {
-		clangd = {
-			filetypes = { "c", "cpp" },
-		},
-	}
-
-	require("mason").setup()
-	local ensure_installed = vim.tbl_keys(servers or {})
-	vim.list_extend(ensure_installed, { "stylua" })
-	require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-	require("mason-lspconfig").setup({
-		handlers = {
-			function(server_name)
-				local server = servers[server_name] or {}
-				-- This handles overriding only values explicitly passed
-				-- by the server configuration above. Useful when disabling
-				-- certain features of an LSP (for example, turning off formatting for tsserver)
-				server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-				-- Setup server iteself
-				require("lspconfig")[server_name].setup(server)
-			end,
-		},
 	})
 end
 

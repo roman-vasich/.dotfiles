@@ -60,6 +60,7 @@ vim.g.rustaceanvim = {
 			local path = workspace_root .. "/.rust-analyzer.json"
 			path = vim.fn.resolve(path)
 			local f = io.open(path, "r")
+			print(path)
 			if f then
 				local settings = f:read("a")
 				settings = vim.json.decode(settings)
@@ -67,8 +68,9 @@ vim.g.rustaceanvim = {
 					vim.notify("Failed to parse settings.json config", vim.log.levels.ERROR)
 				end
 
-				vim.tbl_deep_extend("force", default_settings, settings)
 				io.close(f)
+
+				return vim.tbl_deep_extend("force", default_settings, settings)
 			end
 
 			return default_settings

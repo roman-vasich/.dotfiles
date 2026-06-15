@@ -1,3 +1,5 @@
+---@module "lazy"
+---@type LazySpec
 local lsp = {
 	"neovim/nvim-lspconfig",
 	dependencies = {
@@ -34,6 +36,16 @@ local lsp = {
 		},
 	},
 	config = require("config.lsp"),
+	keys = {
+		{
+			"<leader>f",
+			function()
+				vim.lsp.buf.format()
+			end,
+			mode = "n",
+			desc = "[F]ormat buffer",
+		},
+	},
 }
 
 return lsp

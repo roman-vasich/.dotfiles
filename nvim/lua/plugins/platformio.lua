@@ -1,3 +1,5 @@
+---@module "lazy"
+---@type LazySpec
 local plugin = {
 	"anurag3301/nvim-platformio.lua",
 	dependencies = {

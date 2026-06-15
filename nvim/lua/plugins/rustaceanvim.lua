@@ -1,3 +1,5 @@
+---@module "lazy"
+---@type LazySpec
 local rustaceanvim = {
 	"mrcjkb/rustaceanvim",
 	version = "5^",
@@ -5,7 +7,6 @@ local rustaceanvim = {
 	init = function()
 		require("config.rustacceanvim")
 	end,
-	config = function() end,
 }
 
 return rustaceanvim

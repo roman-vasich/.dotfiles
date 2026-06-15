@@ -1,5 +1,7 @@
 local plug = {}
 
+---@module "lazy"
+---@type LazySpec
 plug = {
 	"christoomey/vim-tmux-navigator",
 	cmd = {

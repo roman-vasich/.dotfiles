@@ -1,8 +1,10 @@
+---@module "lazy"
+---@type LazySpec
 local treeseeter = { -- Highlight, edit, and navigate code
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
+	branch = "main",
 	opts = {
-		ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
 		-- Autoinstall languages that are not installed
 		auto_install = true,
 		highlight = {
@@ -17,9 +19,44 @@ local treeseeter = { -- Highlight, edit, and navigate code
 	config = function(_, opts)
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter.configs").setup(opts)
+		-- ---@diagnostic disable-next-line: missing-fields
+		-- require("nvim-treesitter.configs").setup(opts)
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function()
+				-- Enable treesitter highlighting and disable regex syntax
+				pcall(vim.treesitter.start)
+				-- Enable treesitter-based indentation
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
+		})
 
+		local ensureInstalled = {
+			"bash",
+			"c",
+			"html",
+			"lua",
+			"luadoc",
+			"markdown",
+			"vim",
+			"vimdoc",
+			"go",
+			"rust",
+			"cpp",
+			"json",
+			"jsonnet",
+			"yaml",
+			"helm",
+			"javascript",
+			"typescript",
+			"tsx"
+		}
+		local alreadyInstalled = require("nvim-treesitter.config").get_installed()
+		local parsersToInstall = vim.iter(ensureInstalled)
+			:filter(function(parser)
+				return not vim.tbl_contains(alreadyInstalled, parser)
+			end)
+			:totable()
+		require("nvim-treesitter").install(parsersToInstall)
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:
 		--

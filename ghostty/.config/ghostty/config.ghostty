@@ -1,0 +1,47 @@
+shell-integration = zsh
+macos-option-as-alt = true
+mouse-hide-while-typing = true
+
+window-save-state = always
+window-step-resize = true
+
+clipboard-read = allow
+clipboard-write = allow
+
+
+shell-integration-features = sudo,ssh-terminfo,ssh-env
+
+# UI
+
+background-opacity = 0.85
+background-blur-radius = 20
+theme =Dracula+
+unfocused-split-opacity = 0.85
+
+# Keybinds
+
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
+
+keybind = ctrl+a>h=new_split:left
+keybind = ctrl+a>j=new_split:down
+keybind = ctrl+a>k=new_split:up
+keybind = ctrl+a>l=new_split:right
+
+keybind = ctrl+shift+h=resize_split:left,25
+keybind = ctrl+shift+l=resize_split:right,25
+keybind = ctrl+shift+j=resize_split:down,25
+keybind = ctrl+shift+k=resize_split:up,25
+
+keybind = ctrl+a>f=toggle_split_zoom
+
+keybind = ctrl+n=new_tab
+keybind = ctrl+a>n=next_tab
+keybind = ctrl+a>p=previous_tab
+
+keybind = ctrl+shift+r=reload_config
+
+# Send the explicit escape sequence for Ctrl + / directly to the terminal application
+keybind = ctrl+/=text:\x1f

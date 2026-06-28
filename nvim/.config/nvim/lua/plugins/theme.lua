@@ -11,6 +11,8 @@ local plugin = {
 				transparent_bg = true,
 				italic_comment = true,
 			})
+
+			vim.cmd.colorscheme("dracula-soft")
 		end,
 	},
 }

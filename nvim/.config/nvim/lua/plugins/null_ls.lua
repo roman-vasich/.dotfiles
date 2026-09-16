@@ -1,7 +1,8 @@
----@module lazy
+---@module "lazy"
 ---@type LazySpec
 local plugin = {
-	-- none-ls/null-ls integrates into vim.lsp to provide formatting/linting.
+	enabled = true,
+	-- None-ls/null-ls integrates into vim.lsp to provide formatting/linting.
 	"nvimtools/none-ls.nvim",
 	dependencies = { "nvim-lua/plenary.nvim", "nvimtools/none-ls-extras.nvim" },
 	event = {
@@ -12,7 +13,7 @@ local plugin = {
 	config = function()
 		local null_ls = require("null-ls")
 		null_ls.setup({
-			debug = true,
+			-- debug = true,
 			sources = {
 				-- Lua
 				null_ls.builtins.formatting.stylua,
@@ -22,20 +23,7 @@ local plugin = {
 					filetypes = { "json", "markdown" },
 				}),
 
-				-- Spelling
-				null_ls.builtins.completion.spell.with({
-					---@type vim.diagnostic.Opts
-					diagnostic_config = {
-						-- see :help vim.diagnostic.config()
-						underline = true,
-						virtual_text = true,
-						signs = true,
-						update_in_insert = false,
-						severity_sort = true,
-					},
-				}),
-
-				-- Yamls
+				-- YAMLs
 				null_ls.builtins.diagnostics.actionlint,
 				null_ls.builtins.diagnostics.yamllint.with({
 					extra_args = {
@@ -50,8 +38,9 @@ local plugin = {
 				null_ls.builtins.diagnostics.golangci_lint,
 
 				-- C/C++
+				-- Linting is embedded into clangd via clang-tidy
 				-- null_ls.builtins.diagnostics.cpplint,
-				-- null_ls.builtins.diagnostics.cppcheck,
+				null_ls.builtins.diagnostics.cppcheck,
 				null_ls.builtins.formatting.clang_format,
 
 				-- SQL

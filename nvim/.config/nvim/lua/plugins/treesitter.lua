@@ -1,11 +1,13 @@
 ---@module "lazy"
 ---@type LazySpec
-local treeseeter = { -- Highlight, edit, and navigate code
+-- TreeSitter Parser Manager
+local treeseeter = {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
 	branch = "main",
+	enabled = true,
 	opts = {
-		auto_install = false,
+		auto_install = true,
 		highlight = {
 			enable = true,
 			-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
@@ -20,14 +22,14 @@ local treeseeter = { -- Highlight, edit, and navigate code
 
 		-- ---@diagnostic disable-next-line: missing-fields
 		-- require("nvim-treesitter.configs").setup(opts)
-		vim.api.nvim_create_autocmd("FileType", {
-			callback = function()
-				-- Enable treesitter highlighting and disable regex syntax
-				pcall(vim.treesitter.start)
-				-- Enable treesitter-based indentation
-				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-			end,
-		})
+		-- vim.api.nvim_create_autocmd("FileType", {
+		-- 	callback = function()
+		-- 		-- Enable treesitter highlighting and disable regex syntax
+		-- 		pcall(vim.treesitter.start)
+		-- 		-- Enable treesitter-based indentation
+		-- 		-- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		-- 	end,
+		-- })
 
 		local ensureInstalled = {
 			"bash",
@@ -53,10 +55,10 @@ local treeseeter = { -- Highlight, edit, and navigate code
 		}
 		local alreadyInstalled = require("nvim-treesitter.config").get_installed()
 		local parsersToInstall = vim.iter(ensureInstalled)
-			:filter(function(parser)
-				return not vim.tbl_contains(alreadyInstalled, parser)
-			end)
-			:totable()
+		    :filter(function(parser)
+			    return not vim.tbl_contains(alreadyInstalled, parser)
+		    end)
+		    :totable()
 		require("nvim-treesitter").install(parsersToInstall)
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:

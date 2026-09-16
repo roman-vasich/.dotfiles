@@ -1,6 +1,10 @@
 require("rustaceanvim")
 require("io")
 
+-- ESP issues so far
+-- https://github.com/esp-rs/espup/discussions/244
+-- https://github.com/rust-lang/rust-analyzer/issues/22371
+
 ---@type rustaceanvim.Opts
 vim.g.rustaceanvim = {
 	tools = {
@@ -8,6 +12,20 @@ vim.g.rustaceanvim = {
 	},
 	server = {
 		auto_attach = true,
+		cmd = function()
+			-- RA mustn't resolve to active toolchain e.g. eps.
+			-- Instead stable RA should be used.
+			local result = vim.system({
+				"rustup",
+				"which",
+				"--toolchain",
+				"stable",
+				"rust-analyzer",
+			}, { text = true }):wait()
+
+			local path = vim.trim(result.stdout)
+			return { path }
+		end,
 		on_attach = function(_, bufnr)
 			vim.keymap.set("n", "E", function()
 				vim.cmd.RustLsp("expandMacro")
@@ -53,14 +71,14 @@ vim.g.rustaceanvim = {
 				end
 			end
 		end,
-		-- Rust analyzer depending on the project (ussually a huge workspace) requires extensive configuration
+		-- Rust analyzer depending on the project (usually a huge workspace) requires extensive configuration
 		-- that can no be generalized. For that purpose `.rust-analyzer.json` at the root of the workspace (project)
 		-- is used to merge default_settings with `.rust-analyzer.json` settings.
 		settings = function(workspace_root, default_settings)
 			local path = workspace_root .. "/.rust-analyzer.json"
 			path = vim.fn.resolve(path)
 			local f = io.open(path, "r")
-			print(path)
+
 			if f then
 				local settings = f:read("a")
 				settings = vim.json.decode(settings)
@@ -76,7 +94,16 @@ vim.g.rustaceanvim = {
 			return default_settings
 		end,
 		default_settings = {
-			["rust-analyzer"] = {},
+			["rust-analyzer"] = {
+				check = {
+					command = "clippy",
+				},
+				cargo = {
+					allFeatures = false, -- important
+					extraArgs = { "--release" }, -- probably not required, but better since used for building
+					allTargets = false, -- Not required
+				},
+			},
 		},
 	},
 

@@ -2,7 +2,7 @@
 ---@type LazySpec
 local rustaceanvim = {
 	"mrcjkb/rustaceanvim",
-	version = "5^",
+	version = '^9',
 	lazy = false, -- This plugin is already lazy
 	init = function()
 		require("config.rustaceanvim")

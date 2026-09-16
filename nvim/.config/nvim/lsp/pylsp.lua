@@ -8,20 +8,7 @@ local config = {
 		pylsp = {
 			plugins = {
 				-- Managed by null-ls
-				ruff = { enabled = false },
-				isort = { enabled = false },
-				black = { enabled = false },
-				pyflakes = { enabled = false },
-				pycodestyle = { enabled = false },
-				autopep8 = { enabled = false },
-				yapf = { enabled = false },
-				mccabe = { enabled = false },
-				pylsp_mypy = { enabled = false },
-				pylsp_isort = { enabled = false },
-				pylint = { enabled = false },
-				flake8 = { enabled = true },
-				pydocstyle = { enabled = true },
-				rope_completion = { enabled = true },
+				ruff = { enabled = true },
 				jedi_completion = { enabled = true },
 				jedi_definition = { enabled = true },
 				jedi_hover = { enabled = true },
@@ -31,6 +18,14 @@ local config = {
 			},
 		},
 	},
+	before_init = function(params, config)
+		local venv_path = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+		if venv_path then
+			config.settings.pylsp.plugins.jedi = {
+				environment = venv_path,
+			}
+		end
+	end,
 }
 
 return config

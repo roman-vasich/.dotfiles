@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec
 local plugin = {
 	enabled = true,
@@ -13,7 +13,6 @@ local plugin = {
 	config = function()
 		local null_ls = require("null-ls")
 		null_ls.setup({
-			-- debug = true,
 			sources = {
 				-- Lua
 				null_ls.builtins.formatting.stylua,
@@ -41,7 +40,7 @@ local plugin = {
 				-- Linting is embedded into clangd via clang-tidy
 				-- null_ls.builtins.diagnostics.cpplint,
 				null_ls.builtins.diagnostics.cppcheck,
-				null_ls.builtins.formatting.clang_format,
+				-- null_ls.builtins.formatting.clang_format,
 
 				-- SQL
 				null_ls.builtins.formatting.sqlfluff.with({

@@ -156,10 +156,11 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 	end,
 })
 
--- Check for external file changes (works with Claude Code)
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, { -- CursorHold
+-- Automatically trigger a check for file changes
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+	pattern = "*",
 	callback = function()
-		if vim.fn.mode() ~= "c" then
+		if vim.fn.getcmdwintype() == "" then
 			vim.cmd("checktime")
 		end
 	end,

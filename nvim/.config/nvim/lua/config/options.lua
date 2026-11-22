@@ -23,6 +23,7 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = false
 vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
+vim.o.autoread = true
 
 -- vim.opt_local.spell = true
 -- vim.opt_local.spelllang = { "en_us" }

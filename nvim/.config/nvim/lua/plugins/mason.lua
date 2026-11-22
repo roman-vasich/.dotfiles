@@ -19,11 +19,7 @@ local ensure_installed = {
 
 	-- C/C++
 	"clangd",
-	"clang-format",
-	"cpplint",
-	"mbake",
-	"cmake",
-	"cmakelint",
+	"neocmakelsp",
 
 	-- Python
 	"ruff",
@@ -52,6 +48,8 @@ local ensure_installed = {
 	-- TypeScript
 	"ts_ls",
 
+	"pylsp",
+
 	"misspell",
 }
 
@@ -62,7 +60,11 @@ local c = {
 		"mason-org/mason.nvim",
 		---@module 'mason'
 		---@type MasonSettings
-		opts = {},
+		opts = {
+			pip = {
+				upgrade_pip = true,
+			},
+		},
 		dependencies = {
 			"jay-babu/mason-nvim-dap.nvim",
 		},

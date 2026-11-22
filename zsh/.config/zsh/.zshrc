@@ -1,7 +1,3 @@
-export PATH="/home/pep/.local/share/solana/install/active_release/bin:$PATH"
-export PATH="/home/pep/.avm/bin:$PATH"
-export PATH="/home/pep/.local/share/nvim/mason/bin:$PATH"
-
 # Activate ESP IDF shell environment
 idf() {
   git config --global --get-all safe.directory \
@@ -79,8 +75,6 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-fpath+=(~/.config/hcloud/completion/zsh)
-
 # Turn off all beeps
 unsetopt BEEP
 
@@ -91,6 +85,7 @@ alias vi="nvim"
 # Shell integrations
 source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

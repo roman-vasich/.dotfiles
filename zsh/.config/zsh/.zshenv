@@ -1,12 +1,37 @@
 # Shared zsh environment.
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 
-# Visuals
+# Editor and Visuals
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-# Kubectl clusters
-export KUBECONFIG="$HOME/Projects/notbet/terraform-hcloud-kube-hetzner/cluster-1/cluster-1_kubeconfig.yaml"
+# Zsh eval path
+fpath+=(
+	"$HOME/.config/hcloud/completion/zsh"
+)
 
 # User-installed binaries
-path=("$HOME/go/bin" "$HOME/.cargo/bin" $path)
+path+=(
+	"$HOME/go/bin"
+	"$HOME/.cargo/bin"
+	"$HOME/.local/bin"
+	"$HOME/.local/share/solana/install/active_release/bin"
+	"$HOME/.avm/bin"
+	"$HOME/.local/share/nvim/mason/bin"
+	$path
+)
+
+case "$(uname -s)" in
+    Linux*)
+	    platform="Linux"
+	;;
+    Darwin*)
+	platform="macOS" 
+	path+=(
+		"$HOME/homebrew/bin"
+		"/opt/homebrew/bin"
+	)
+	;;
+    *)
+	    platform="Unknown" ;;
+esac

@@ -9,7 +9,6 @@ window-step-resize = true
 clipboard-read = allow
 clipboard-write = allow
 
-
 shell-integration-features = sudo,ssh-terminfo,ssh-env
 
 # UI
@@ -21,17 +20,32 @@ unfocused-split-opacity = 0.85
 
 # Keybinds
 
-keybind = ctrl+h=goto_split:left
-keybind = ctrl+j=goto_split:bottom
-keybind = ctrl+k=goto_split:top
-keybind = ctrl+l=goto_split:right
+## Keybindings Focus (Zoom) Mode
+
+keybind = ctrl+f=toggle_split_zoom
+keybind = chain=activate_key_table:focus
+
+keybind = focus/ctrl+h=ignore
+keybind = focus/ctrl+j=ignore
+keybind = focus/ctrl+k=ignore
+keybind = focus/ctrl+l=ignore
+
+keybind = focus/ctrl+f=toggle_split_zoom
+keybind = chain=deactivate_key_table
+
+# Mark pane navigation as performable to allow passing
+# vim-mode navigation to the shell instead of entering
+# focus mode (see above).
+keybind = performable:ctrl+h=goto_split:left
+keybind = performable:ctrl+j=goto_split:bottom
+keybind = performable:ctrl+k=goto_split:top
+keybind = performable:ctrl+l=goto_split:right
 
 keybind = ctrl+a>h=new_split:left
 keybind = ctrl+a>j=new_split:down
 keybind = ctrl+a>k=new_split:up
 keybind = ctrl+a>l=new_split:right
 
-keybind = ctrl+f=toggle_split_zoom
 keybind = ctrl+shift+h=resize_split:left,25
 keybind = ctrl+shift+l=resize_split:right,25
 keybind = ctrl+shift+j=resize_split:down,25

@@ -31,12 +31,11 @@ keybind = ctrl+a>j=new_split:down
 keybind = ctrl+a>k=new_split:up
 keybind = ctrl+a>l=new_split:right
 
+keybind = ctrl+f=toggle_split_zoom
 keybind = ctrl+shift+h=resize_split:left,25
 keybind = ctrl+shift+l=resize_split:right,25
 keybind = ctrl+shift+j=resize_split:down,25
 keybind = ctrl+shift+k=resize_split:up,25
-
-keybind = ctrl+a>f=toggle_split_zoom
 
 keybind = ctrl+n=new_tab
 keybind = ctrl+a>n=next_tab

@@ -41,6 +41,7 @@ local treeseeter = {
 			"vim",
 			"vimdoc",
 			"go",
+			"python",
 			"rust",
 			"cpp",
 			"json",
@@ -55,10 +56,10 @@ local treeseeter = {
 		}
 		local alreadyInstalled = require("nvim-treesitter.config").get_installed()
 		local parsersToInstall = vim.iter(ensureInstalled)
-		    :filter(function(parser)
-			    return not vim.tbl_contains(alreadyInstalled, parser)
-		    end)
-		    :totable()
+			:filter(function(parser)
+				return not vim.tbl_contains(alreadyInstalled, parser)
+			end)
+			:totable()
 		require("nvim-treesitter").install(parsersToInstall)
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:

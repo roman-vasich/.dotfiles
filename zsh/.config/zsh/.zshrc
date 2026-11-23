@@ -85,7 +85,8 @@ alias vi="nvim"
 # Shell integrations
 source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
-eval "$(fnm env --use-on-cd --shell zsh)"
+eval "$(fnm env --log-level quiet --use-on-cd --shell zsh 2> /dev/null)"
+
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

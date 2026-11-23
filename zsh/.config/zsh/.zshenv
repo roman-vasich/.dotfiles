@@ -30,6 +30,7 @@ case "$(uname -s)" in
 	path+=(
 		"$HOME/homebrew/bin"
 		"/opt/homebrew/bin"
+		"/opt/homebrew/opt/libpq/bin"
 	)
 	;;
     *)

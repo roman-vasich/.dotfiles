@@ -25,10 +25,10 @@ unfocused-split-opacity = 0.85
 keybind = ctrl+f=toggle_split_zoom
 keybind = chain=activate_key_table:focus
 
-keybind = focus/ctrl+h=ignore
-keybind = focus/ctrl+j=ignore
-keybind = focus/ctrl+k=ignore
-keybind = focus/ctrl+l=ignore
+keybind = focus/ctrl+h=text:\x08
+keybind = focus/ctrl+j=text:\x0a
+keybind = focus/ctrl+k=text:\x0b
+keybind = focus/ctrl+l=text:\x0c
 
 keybind = focus/ctrl+f=toggle_split_zoom
 keybind = chain=deactivate_key_table

@@ -165,3 +165,13 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
 		end
 	end,
 })
+
+-- Disable codediff cursorline highlight
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CodeDiffOpen",
+	callback = function(event)
+		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(event.data.tabpage)) do
+			vim.wo[win].cursorline = false
+		end
+	end,
+})

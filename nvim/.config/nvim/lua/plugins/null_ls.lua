@@ -19,7 +19,7 @@ local plugin = {
 
 				-- JSON/Markdown
 				null_ls.builtins.formatting.prettierd.with({
-					filetypes = { "json", "markdown" },
+					filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "css", "scss" },
 				}),
 
 				-- YAMLs

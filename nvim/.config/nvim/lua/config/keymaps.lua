@@ -13,6 +13,17 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
+local function format(bufnr)
+	vim.lsp.buf.format({
+		bufnr = bufnr,
+		async = bufnr == nil,
+		filter = function(c)
+			-- Use prettierd (NullLs) formatter
+			return c.name ~= "ts_ls" and c.name ~= "eslint"
+		end,
+	})
+end
+
 vim.keymap.set("n", "<leader>f", function()
-	vim.lsp.buf.format({ async = true })
+	format()
 end, { desc = "Format current buffer" })

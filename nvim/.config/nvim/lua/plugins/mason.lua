@@ -47,6 +47,7 @@ local ensure_installed = {
 
 	-- TypeScript
 	"ts_ls",
+	"eslint",
 
 	"pylsp",
 
